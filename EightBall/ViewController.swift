@@ -35,6 +35,7 @@ let sayings = [
 
 
 class ViewController: UIViewController {
+	var lastAnswer:Int = -1
 
 	@IBOutlet weak var label: UILabel!
 	override func viewDidLoad() {
@@ -46,10 +47,20 @@ class ViewController: UIViewController {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
+	
+	func generateAnswer() -> String
+	{
+		var index = 0;
+		repeat {
+			index = Int(arc4random_uniform(UInt32(sayings.count)))
+		} while index == lastAnswer
+		lastAnswer = index
+		
+		return sayings[index]
+	}
 
 	@IBAction func shake8Ball(_ sender: Any) {
-		let index = Int(arc4random_uniform(UInt32(sayings.count)))
-		label.text = sayings[index]
+		label.text = generateAnswer()
 	}
 	
 }
